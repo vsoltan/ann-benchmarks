@@ -25,6 +25,9 @@ def build(library, args):
 def build_multiprocess(args):
     return build(*args)
 
+# only select hsnw algorithm docker images 
+def filter_docker_images(fn):
+    return "hnsw" in fn
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -55,7 +58,7 @@ if __name__ == "__main__":
     elif os.getenv('LIBRARY'):
         tags = [os.getenv('LIBRARY')]
     else:
-        tags = [fn.split('.')[-1] for fn in os.listdir('install') if fn.startswith('Dockerfile.')]
+        tags = [fn.split('.')[-1] for fn in os.listdir('install') if fn.startswith('Dockerfile.') and filter_docker_images(fn)]
 
     print('Building algorithm images... with (%d) processes' % args.proc)
 

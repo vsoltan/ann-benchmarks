@@ -1,6 +1,7 @@
 float:
   any:
     sptag:
+      disabled: true
       docker-tag: ann-benchmarks-sptag
       module: ann_benchmarks.algorithms.sptag
       constructor: Sptag
@@ -32,6 +33,7 @@ float:
           # This run group will produce eight algorithm instances:
           # FaissLSH(32), FaissLSH(64), and so on up to FaissLSH(4096).
     faiss-ivf:
+      disabled: true
       docker-tag: ann-benchmarks-faiss
       module: ann_benchmarks.algorithms.faiss
       constructor: FaissIVF
@@ -50,6 +52,7 @@ float:
           args: [[400, 1024, 4096, 8192, 16384],
                  [1, 10, 40, 100, 200]]
     hnswlib:
+      disabled: false # RUN THIS
       docker-tag: ann-benchmarks-hnswlib
       module: ann_benchmarks.algorithms.hnswlib
       constructor: HnswLib
@@ -93,6 +96,7 @@ float:
           query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
 
     hnsw(faiss):
+     disabled: false # RUN THIS  
      docker-tag: ann-benchmarks-faiss
      module: ann_benchmarks.algorithms.faiss_hnsw
      constructor: FaissHNSW
@@ -136,14 +140,16 @@ float:
          query-args: [[10, 20, 40, 80, 120, 200, 400, 600, 800]]
 
     flann:
-     docker-tag: ann-benchmarks-flann
-     module: ann_benchmarks.algorithms.flann
-     constructor: FLANN
-     base-args: ["@metric"]
-     run-groups:
-       flann:
-         args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97]]
+      disabled: true
+      docker-tag: ann-benchmarks-flann
+      module: ann_benchmarks.algorithms.flann
+      constructor: FLANN
+      base-args: ["@metric"]
+      run-groups:
+        flann:
+          args: [[0.2, 0.5, 0.7, 0.8, 0.9, 0.95, 0.97]]
     annoy:
+      disabled: true
       docker-tag: ann-benchmarks-annoy
       module: ann_benchmarks.algorithms.annoy
       constructor: Annoy
@@ -157,6 +163,7 @@ float:
           # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
           # which will be used to run 12 different queries.
     milvus:
+      disabled: true
       docker-tag: ann-benchmarks-milvus
       module: ann_benchmarks.algorithms.milvus
       constructor: Milvus
@@ -177,6 +184,7 @@ float:
         extra:
           args: [16, [5, 10, 15, 20, 25, 30, 40]]
     n2:
+      disabled: true
       docker-tag: ann-benchmarks-n2
       module: ann_benchmarks.algorithms.n2
       constructor: N2
@@ -229,6 +237,7 @@ float:
         empty:
           args: []
     bruteforce-blas:
+      disabled: true
       docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.bruteforce
       constructor: BruteForceBLAS
@@ -264,6 +273,7 @@ float:
         ball:
           args: &treeargs [[10, 20, 40, 100, 200, 400, 1000]]
     kd:
+      disabled: true
       docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.kdtree
       constructor: KDTree
@@ -272,6 +282,7 @@ float:
         ball:
           args: *treeargs
     BallTree(nmslib):
+      disabled: true
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
@@ -291,6 +302,7 @@ float:
           # NmslibNewIndex("angular", "vptree", {"tuneK": 10, "desiredRecall":
           # 0.1}).
     pynndescent:
+      disabled: true
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
       constructor: PyNNDescent
@@ -307,6 +319,7 @@ float:
                "pruning_degree_multiplier":[2.0, 2.5], "leaf_size": 64}
           query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32]]
     NGT-panng:
+      disabled: true
       docker-tag: ann-benchmarks-ngt
       module: ann_benchmarks.algorithms.panng_ngt
       constructor : PANNG
@@ -316,6 +329,7 @@ float:
            args : [{'edge': 20, 'pathadj': 40, 'searchedge': 60}]
            query-args : [[0.6, 0.8, 0.9, 1.0, 1.02, 1.05, 1.1, 1.2]]
     NGT-onng:
+      disabled: true
       docker-tag: ann-benchmarks-ngt
       module: ann_benchmarks.algorithms.onng_ngt
       constructor : ONNG
@@ -328,6 +342,7 @@ float:
            args : [{'edge': 100, 'outdegree': 10, 'indegree': 80, 'search_edge': 60, 'tree': False}]
            query-args : [[0.6, 0.9, 0.995, 0.998, 1.0, 1.01, 1.02, 1.05, 1.07]]
     NGT-qg:
+      disabled: true
       docker-tag: ann-benchmarks-ngt
       module: ann_benchmarks.algorithms.qg_ngt
       constructor : QG
@@ -338,6 +353,7 @@ float:
            query-args : [[1.5, 1.7, 2.0, 2.5, 3.0, 5.0, 8.0],
                          [0.9, 0.95, 1.0, 1.01, 1.02, 1.03, 1.04, 1.05, 1.06]]
     mrpt:
+      disabled: true
       docker-tag: ann-benchmarks-mrpt
       module: ann_benchmarks.algorithms.mrpt
       constructor: MRPT
@@ -360,6 +376,7 @@ float:
 
   euclidean:
     scann:
+      disabled: true
       docker-tag: ann-benchmarks-scann
       module: ann_benchmarks.algorithms.scann
       constructor: Scann
@@ -374,6 +391,7 @@ float:
           args: [[100], [.nan], [4], ["squared_l2"]]
           query-args: [[[2, 20], [3, 20], [3, 30], [4, 30], [5, 40], [8, 80]]]
     kgraph:
+      disabled: true
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
@@ -383,6 +401,7 @@ float:
           args: [ {'reverse': -1}, True] # XXX: hard-codes save_index as True
           query-args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]]
     hnsw(nmslib):
+      disabled: false # RUN THIS 
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
@@ -424,6 +443,7 @@ float:
             - False
           query-args: [[1, 2, 5, 10, 20, 30, 50, 70, 90, 120, 160]]
     SW-graph(nmslib):
+      disabled: true
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
@@ -450,6 +470,7 @@ float:
             - False
           query-args: [[30, 25, 20, 15, 10, 5, 4, 3, 2, 1]]
     pynndescent:
+      disabled: true
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
       constructor: PyNNDescent
@@ -476,6 +497,7 @@ float:
                "pruning_degree_multiplier":[2.0, 3.0], "leaf_size": 48}
           query-args: [[0.0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
     elasticsearch:
+      disabled: true
       docker-tag: ann-benchmarks-elasticsearch
       module: ann_benchmarks.algorithms.elasticsearch
       constructor: ElasticsearchScriptScoreQuery
@@ -484,6 +506,7 @@ float:
         empty:
           args: []
     elastiknn-l2lsh:
+      disabled: true
       docker-tag: ann-benchmarks-elastiknn
       module: ann_benchmarks.algorithms.elastiknn
       constructor: L2Lsh
@@ -498,6 +521,7 @@ float:
           - [1000, 10000]
           - [0, 6]
     opendistroknn:
+      disabled: true
       docker-tag: ann-benchmarks-opendistroknn
       module: ann_benchmarks.algorithms.opendistroknn
       constructor: OpenDistroKNN
@@ -534,6 +558,7 @@ float:
 
   angular:
     puffinn:
+      disabled: true
       docker-tag: ann-benchmarks-puffinn
       module: ann_benchmarks.algorithms.puffinn
       constructor: Puffinn
@@ -546,6 +571,7 @@ float:
             ]
             query-args: [[0.1, 0.2, 0.5, 0.7, 0.9, 0.95, 0.99]]
     kgraph:
+      disabled: true
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
@@ -555,6 +581,7 @@ float:
           args: [{'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
           query-args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]]
     hnsw(nmslib):
+      disabled: false # RUN THIS
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
@@ -583,6 +610,7 @@ float:
             - False
           query-args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
     SW-graph(nmslib):
+      disabled: true
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
@@ -605,6 +633,7 @@ float:
             - False
           query-args: [[120, 80, 60, 40, 20, 10, 8, 4, 2]]
     rpforest:
+      disabled: true
       docker-tag: ann-benchmarks-rpforest
       module: ann_benchmarks.algorithms.rpforest
       constructor: RPForest
@@ -613,6 +642,7 @@ float:
           args: [[3, 10, 40, 100, 400],
                 [3, 10, 40, 100, 400]]
     pynndescent:
+      disabled: true
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
       constructor: PyNNDescent
@@ -649,6 +679,7 @@ float:
                "pruning_degree_multiplier":2.5, leaf_size: 35}
           query-args: [[0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
     scann:
+      disabled: true
       docker-tag: ann-benchmarks-scann
       module: ann_benchmarks.algorithms.scann
       constructor: Scann
@@ -666,6 +697,7 @@ float:
           args: [[1400], [0.15], [3], ["dot_product"]]
           query-args: [[[1, 30], [4, 30], [9, 30], [16, 32], [25, 50], [36, 72], [49, 98], [70, 150], [90, 200], [120, 210], [180, 270], [210, 330], [260, 400], [320, 500], [400, 600], [500, 700], [800, 900]]]
     elasticsearch:
+      disabled: true
       docker-tag: ann-benchmarks-elasticsearch
       module: ann_benchmarks.algorithms.elasticsearch
       constructor: ElasticsearchScriptScoreQuery
@@ -674,6 +706,7 @@ float:
         empty:
           args: []
     opendistroknn:
+      disabled: true
       docker-tag: ann-benchmarks-opendistroknn
       module: ann_benchmarks.algorithms.opendistroknn
       constructor: OpenDistroKNN
@@ -711,6 +744,7 @@ float:
 bit:
   hamming:
     mih:
+      disabled: true
       docker-tag: ann-benchmarks-mih
       module: ann_benchmarks.algorithms.subprocess
       constructor: BitSubprocessPrepared
@@ -727,6 +761,7 @@ bit:
           args: { "d" : "@dimension", "r" : [0, 2, 3],
             "chunk-factor" : [0.2, 0.5, 0.8] }
     kgraph:
+      disabled: true
       docker-tag: ann-benchmarks-kgraph
       module: ann_benchmarks.algorithms.kgraph
       constructor: KGraph
@@ -736,6 +771,7 @@ bit:
           args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                  {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
     hnsw(nmslib):
+      disabled: false # RUN THIS
       docker-tag: ann-benchmarks-nmslib
       module: ann_benchmarks.algorithms.nmslib
       constructor: NmslibReuseIndex
@@ -764,6 +800,7 @@ bit:
             - False
           query-args: [[1, 2, 5, 10, 15, 20, 30, 40, 50, 70, 80]]
     pynndescent:
+      disabled: true
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
       constructor: PyNNDescent
@@ -790,6 +827,7 @@ bit:
                "pruning_degree_multiplier":[2.0, 2.5], leaf_size: 80}
           query-args: [[0.08, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36]]
     annoy:
+      disabled: true
       docker-tag: ann-benchmarks-annoy
       module: ann_benchmarks.algorithms.annoy
       constructor: Annoy
@@ -803,6 +841,7 @@ bit:
           # 100), Annoy("angular", 200), and Annoy("angular", 400) -- each of
           # which will be used to run 12 different queries.
     faiss-ivf:
+      disabled: true
       docker-tag: ann-benchmarks-faiss
       module: ann_benchmarks.algorithms.faiss
       constructor: FaissIVF
@@ -813,6 +852,7 @@ bit:
           query-args: [[1, 5, 10, 50, 100, 200]]
   jaccard:
     bf:
+      disabled: true
       docker-tag: ann-benchmarks-sklearn
       module: ann_benchmarks.algorithms.bruteforce
       constructor: BruteForceBLAS
@@ -821,6 +861,7 @@ bit:
         base:
           args: {}
     datasketch:
+      disabled: true
       docker-tag: ann-benchmarks-datasketch
       module: ann_benchmarks.algorithms.datasketch
       constructor: DataSketch
@@ -829,6 +870,7 @@ bit:
         base:
           args:  [[128, 256, 512],[8, 16, 32, 64, 128]]
     puffinn:
+      disabled: true
       docker-tag: ann-benchmarks-puffinn
       module: ann_benchmarks.algorithms.puffinn
       constructor: Puffinn
@@ -841,6 +883,7 @@ bit:
             ]
             query-args: [[0.1, 0.2, 0.5, 0.7, 0.9, 0.95, 0.99]]
     pynndescent:
+      disabled: true
       docker-tag: ann-benchmarks-pynndescent
       module: ann_benchmarks.algorithms.pynndescent
       constructor: PyNNDescent

@@ -40,13 +40,29 @@ def run_worker(cpu, args, queue):
             run(definition, args.dataset, args.count, args.runs, args.batch)
         else:
             memory_margin = 500e6  # reserve some extra memory for misc stuff
-            mem_limit = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
+            min_memory_req = 6 * 1 << 20 
+        
+            # clean this disaster up 
+            mem_alloc = int((psutil.virtual_memory().available - memory_margin) / args.parallelism)
+            oom_disable = False 
+
+            if args.mem_limit is not None:
+                oom_disable = True 
+                manual_alloc = int(args.mem_limit / args.parallelism)
+                if manual_alloc < min_memory_req:
+                    print(f"""individual container does not meet minimum memory requirement 
+                        {min_memory_req} bytes, attempted {manual_alloc} bytes. Note, parallelism arg
+                        value is {args.parallelism}, minimum memory with this config is 
+                        {min_memory_req * args.parallelism}. Aborting""")
+                    return 
+                mem_alloc = manual_alloc
+
             cpu_limit = str(cpu)
             if args.batch:
                 cpu_limit = "0-%d" % (multiprocessing.cpu_count() - 1)
 
             run_docker(definition, args.dataset, args.count,
-                       args.runs, args.timeout, args.batch, cpu_limit, mem_limit)
+                       args.runs, args.timeout, args.batch, cpu_limit, oom_disable, mem_alloc)
 
 
 def main():
@@ -122,6 +138,13 @@ def main():
         type=positive_int,
         help='Number of Docker containers in parallel',
         default=1)
+    parser.add_argument(
+        '--mem-limit', 
+        type=positive_int, 
+        help="""artificially limit memory allocated to each docker container. 
+            Since each container is required to have at least 6MB of memory, 
+            manual mem-limit depends on parallelism arg""", 
+        default=None)
 
     args = parser.parse_args()
     if args.timeout == -1:
